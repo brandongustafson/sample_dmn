@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	logallrefupdates = false
+	precomposeunicode = true
+[http]
+	sslVerify = true
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[remote "origin"]
+	url = https://github.com/RutvikPanchal/samleDMN.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
