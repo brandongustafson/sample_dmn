@@ -40,6 +40,30 @@ pipeline {
                 )
             }
         }
+        stage ('Deploy Kieserver') {
+            steps {
+                script {
+                    openshift.withCluster( CLUSTER_NAME ) {
+                        openshift.withProject( PROJECT_NAME ){
+                            def processedTemplate
+                            
+                           
+                           if( NEW_PROJECT ){
+                                 try {
+                                    processedTemplate = openshift.process( "-f", "./docs/rhdm711-prod-immutable-kieserver.yaml", "--param-file=./template/template-create.env")
+                                    def createResources = openshift.create( processedTemplate )
+                                    createResources.logs('-f')
+                                    
+                                 } catch (err) {
+                                    echo err.getMessage()
+                                }
+                            } 
+                         
+                        }
+                    }
+                }
+           }
+        }
         stage ('Uploading Artifacts to Artifactory') {
             steps {
                 rtPublishBuildInfo (
