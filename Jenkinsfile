@@ -11,7 +11,7 @@ pipeline {
                 git url: GIT_URL, branch: BRANCH
             }
         }
-        
+
         stage ('Deploy Kieserver') {
             steps {
                 script {
@@ -20,7 +20,7 @@ pipeline {
                             def processedTemplate
                             
                            
-                           if( NEW_PROJECT ){
+                           if( PROJECT_NAME ){
                                  try {
                                     processedTemplate = openshift.process( "-f", "./docs/rhdm711-prod-immutable-kieserver.yaml", "--param-file=./docs/template-create.env")
                                     def createResources = openshift.create( processedTemplate )
