@@ -5,12 +5,7 @@ pipeline {
         maven 'maven-3.6.3'
         jdk 'jdk11'
     }
-    stages {
-        stage('Fetching Git Repository') {
-            steps {
-                git url: GIT_URL, branch: BRANCH
-            }
-        }
+    
 
         stage ('Deploy Kieserver') {
             steps {
@@ -36,13 +31,7 @@ pipeline {
                 }
            }
         }
-        stage ('Uploading Artifacts to Artifactory') {
-            steps {
-                rtPublishBuildInfo (
-                    serverId: "localhost-jfrog-server"
-                )
-            }
-        }
+
         stage ('Building and Pushing Image to Quay') {
             steps {
                 script {
