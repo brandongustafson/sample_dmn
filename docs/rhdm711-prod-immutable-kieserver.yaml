@@ -457,10 +457,10 @@ objects:
             name: "${KIE_SERVER_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
       output:
         to:
-          kind: Dockerimage
+          kind: DockerImage
           name: "quay.io/bgustafs/${APPLICATION_NAME}:latest"
         pushSecret:
-          name: bgustafs-ocp4robo-pull-secret
+          name: bgustafs-ocp4robo-pull-secret
       triggers: []
   - kind: DeploymentConfig
     apiVersion: v1
