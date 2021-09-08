@@ -5,7 +5,8 @@ pipeline {
         maven 'maven-3.6.3'
         jdk 'jdk11'
     }
-    
+    stages {
+        
 
         stage ('Deploy Kieserver') {
             steps {
@@ -31,7 +32,7 @@ pipeline {
                 }
            }
         }
-
+        
         stage ('Building and Pushing Image to Quay') {
             steps {
                 script {
