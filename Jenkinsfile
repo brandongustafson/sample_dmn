@@ -50,7 +50,7 @@ pipeline {
                            
                            if( NEW_PROJECT ){
                                  try {
-                                    processedTemplate = openshift.process( "-f", "./docs/rhdm711-prod-immutable-kieserver.yaml", "--param-file=./template/template-create.env")
+                                    processedTemplate = openshift.process( "-f", "./docs/rhdm711-prod-immutable-kieserver.yaml", "--param-file=./docs/template-create.env")
                                     def createResources = openshift.create( processedTemplate )
                                     createResources.logs('-f')
                                     
