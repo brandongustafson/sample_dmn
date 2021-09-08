@@ -11,35 +11,7 @@ pipeline {
                 git url: GIT_URL, branch: BRANCH
             }
         }
-        stage ('Artifactory configuration') {
-            steps {
-                rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",
-                    serverId: "localhost-jfrog-server",
-                    releaseRepo: "libs-release-local",
-                    snapshotRepo: "libs-snapshot-local"
-                )
-            }
-        }
-        stage ('Maven Build') {
-            steps {
-                rtMavenRun (
-                    tool: "maven-3.6.3",
-                    pom: 'pom.xml',
-                    goals: '-s settings.xml clean install',
-                    deployerId: "MAVEN_DEPLOYER"
-                )
-            }
-        }
-        stage ('Running Unit Tests') {
-            steps {
-                rtMavenRun (
-                    tool: "maven-3.6.3",
-                    pom: 'pom.xml',
-                    goals: '-s settings.xml test'
-                )
-            }
-        }
+        
         stage ('Deploy Kieserver') {
             steps {
                 script {
