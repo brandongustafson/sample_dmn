@@ -498,7 +498,7 @@ objects:
           terminationGracePeriodSeconds: 90
           containers:
             - name: "${APPLICATION_NAME}-kieserver"
-              image: "${APPLICATION_NAME}-kieserver"
+              image: "quay.io/bgustafs/${APPLICATION_NAME}:latest"
               imagePullPolicy: Always
               lifecycle:
                 postStart:
