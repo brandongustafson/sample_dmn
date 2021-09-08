@@ -457,18 +457,11 @@ objects:
             name: "${KIE_SERVER_IMAGE_STREAM_NAME}:${IMAGE_STREAM_TAG}"
       output:
         to:
-          kind: ImageStreamTag
-          name: "${APPLICATION_NAME}-kieserver:latest"
-      triggers:
-        - type: GitHub
-          github:
-            secret: "${GITHUB_WEBHOOK_SECRET}"
-        - type: Generic
-          generic:
-            secret: "${GENERIC_WEBHOOK_SECRET}"
-        - type: ImageChange
-          imageChange: {}
-        - type: ConfigChange
+          kind: Dockerimage
+          name: "quay.io/bgustafs/${APPLICATION_NAME}:latest"
+        pushSecret:
+          name: bgustafs-ocp4robo-pull-secret
+      triggers: []
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
@@ -480,22 +473,14 @@ objects:
       annotations:
         template.alpha.openshift.io/wait-for-ready: "true"
     spec:
+      runPolicy: Parallel
       revisionHistoryLimit: 10
       strategy:
         rollingParams:
           maxSurge: 100%
           maxUnavailable: 0
         type: Rolling
-      triggers:
-        - type: ImageChange
-          imageChangeParams:
-            automatic: true
-            containerNames:
-              - "${APPLICATION_NAME}-kieserver"
-            from:
-              kind: ImageStream
-              name: "${APPLICATION_NAME}-kieserver"
-        - type: ConfigChange
+      triggers: []
       replicas: 2
       selector:
         deploymentConfig: "${APPLICATION_NAME}-kieserver"
